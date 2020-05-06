@@ -12,7 +12,7 @@ export default {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     docs: [
-      'babel-polyfill',
+      '@babel/polyfill',
       './docs/app/index.js',
       './build/local/client'
     ]
@@ -42,12 +42,15 @@ export default {
         }
       },
       {
-        test: /\.js$/,
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
         loader: babelLoader,
-        exclude: /node_modules/,
         options: {
-          'cacheDirectory': true
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-transform-runtime']
         }
+      }
       },
       {
         test: /\.css$/,

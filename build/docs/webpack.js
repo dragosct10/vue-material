@@ -29,7 +29,7 @@ const componentExampleLoader = require.resolve('../loaders/component-example-loa
 const webpackConfig = {
   entry: {
     app: [
-      'babel-polyfill',
+      '@babel/polyfill',
       './docs/app/index.js',
       './build/docs/offline.js'
     ]
@@ -47,12 +47,15 @@ const webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
         loader: babelLoader,
-        exclude: /node_modules/,
         options: {
-          'cacheDirectory': true
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-transform-runtime']
         }
+      }
       },
       {
         test: /\.vue$/,
